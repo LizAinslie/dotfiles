@@ -1,0 +1,62 @@
+*.font: xft:DejaVu Sans Mono:size=10
+
+!! Colorscheme
+
+! special
+*.foreground: #ffffff
+*.background: #24292f
+*.cursorColor: #ffffff
+
+! black
+*.color0: #24292f
+*.color8: #ffffff
+
+! red
+*.color1: #dc6f7a
+*.color9: #e38588
+
+! green
+*.color2: #618774
+*.color10: #7eab7b
+
+! yellow
+*.color3: #e3786c
+*.color11: #ee896e
+
+! blue
+*.color4: #4f6286
+*.color12: #5c6b92
+
+! magenta
+*.color5: #a97594
+*.color13: #b589a4
+
+! cyan
+*.color6: #4f8896
+*.color14: #6ba5ab
+
+! white
+*.color7: #ffffff
+*.color15: #ffffff
+
+Xft.dpi:                        96
+Xft.antialias:                  1
+Xft.autohint:                   1
+Xft.hinting:                    1
+Xft.hintstyle:                  hintslight
+Xft.lcdfilter:                  lcdlight
+Xft.rgba:                       rgb
+
+URxvt*termName:                 rxvt-256color
+URxvt.depth:                    32
+URxvt*lineSpace:                1
+URxvt.letterSpace:              -1
+URxvt.iso14755:                 false
+URxvt.iso14755_52:              false
+URxvt*geometry:                 80x20
+URxvt.scrollBar:                false
+URxvt*loginShell:               true
+URxvt.internalBorder:           25
+URxvt.perl-ext:	 		default,matcher
+URxvt.url-launcher:             chromium
+URxvt.matcher.button: 		1
