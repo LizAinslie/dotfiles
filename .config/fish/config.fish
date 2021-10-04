@@ -9,9 +9,9 @@ end
 function fish_greeting
 	set random_num (random 1 100)
 
-	# if test $random_num -eq 1
+	if test $random_num -eq 1
 		cat ~/motd_easteregg.txt
-	# else
-		# cat ~/motd_normal.txt
-	# end
+	else
+		cat ~/motd_normal.txt
+	end
 end
