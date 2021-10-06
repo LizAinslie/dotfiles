@@ -1,0 +1,8 @@
+{
+    "name": "Lizzy's Theme",
+    "description": "My personal theme, to match my linux.",
+    "version": "1.0",
+    "author": "Avery A#0001",
+    "theme": "theme.css",
+    "license": "MIT"
+}
