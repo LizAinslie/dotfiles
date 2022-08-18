@@ -1,0 +1,17 @@
+[commit]
+	gpgsign = true
+
+[user]
+	name = Liz Ainslie
+	email = lizainslie16@gmail.com
+
+[core]
+	editor = nvim
+
+[init]
+	defaultBranch = main
+	templatedir = /home/lizzy/.config/git/template
+
+[alias]
+	# Nice and compact log
+	l = log --graph --decorate --pretty=format:'%C(auto)%h %Cblue%ad %Cred%aN %C(auto)%d %n    %s' --date=human
