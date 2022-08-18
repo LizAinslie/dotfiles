@@ -8,3 +8,6 @@ cp ./extra/wallpaper.png /wallpaper.png
 
 # Restore git configs
 cp -r ./git/.config/git/* ~/.config/git/
+
+# Restore fish configs
+cp ./fish/.config/fish/config.fish ~/.config/fish/config.fish
