@@ -6,16 +6,17 @@ Collection of my linux system configs.
 ## Screnshots
 Coming soontm
 
-## Software used
-Below is the software I use and how to get it.
+## Installation & Software used
+Below is the software I use and how to get it. Run the included [install script
+](install.sh) to install all these dependencies as well as copy the required 
+config files to their respective locations.
 
 ### Fish 
-My preferred shell is Fish. To install, run `pacman -S fish`
+My preferred shell is Fish. To install, run `pacman -S fish`.
 
 ### Neofetch
-
 Pretty system information with distro art or images. To install, run `pacman -S
-neofetch`
+neofetch`. Add w3m with `pacman -S w3m` to get image support.
 
 ### Spectacle
 My preferred screenshot tool. To install, run `pacman -S spectacle`. I use a
