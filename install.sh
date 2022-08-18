@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Fetch repo indexes and install base packages
-pacman -Sy git fish neovim w3m neofetch
+pacman -Sy spectacle git fish neovim w3m neofetch
 
 # Restore wallpaper
 cp ./extra/wallpaper.png /wallpaper.png
