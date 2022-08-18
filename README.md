@@ -22,3 +22,6 @@ neofetch`. Add w3m with `pacman -S w3m` to get image support.
 My preferred screenshot tool. To install, run `pacman -S spectacle`. I use a
 custom wrapper script to upload resulting screenshots to an image host, which
 has not been included in this repo as it is specialized for a private host.
+
+## License
+This code is licensed under the [MIT License](LICENSE), Copyright 2022 Elizabeth Hazel Ainslie.
