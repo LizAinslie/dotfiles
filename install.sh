@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
 
-# restore git configs
+# Fetch repo indexes and install base packages
+pacman -Sy git fish neovim w3m neofetch
+
+# Restore wallpaper
+cp ./extra/wallpaper.png /wallpaper.png
+
+# Restore git configs
 cp -r ./git/.config/git/* ~/.config/git/
