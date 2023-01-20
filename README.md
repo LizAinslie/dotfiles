@@ -25,14 +25,5 @@ config files to their respective locations.
 | `dmenu`               | Launcher                                  |
 | `xclip`               | For manipulating the clipboard            |
 
-### Neofetch
-Pretty system information with distro art or images. To install, run `pacman -S
-neofetch`.
-
-### Spectacle
-My preferred screenshot tool. To install, run `pacman -S spectacle`. I use a
-custom wrapper script to upload resulting screenshots to an image host, which
-has not been included in this repo as it is specialized for a private host.
-
 ## License
 This code is licensed under the [MIT License](LICENSE), Copyright 2022 Elizabeth Hazel Ainslie.
