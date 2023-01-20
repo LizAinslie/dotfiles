@@ -1,0 +1,143 @@
+$background_base: #22272e;
+$background_accent: #2d333b;
+
+$theme: #a97594;
+$theme_text: saturate(lighten($theme, 10%), 40%);
+
+$muted: #373e47;
+
+.battery {
+    font-weight: bold;
+
+    &.charging {
+	color: $theme_text;
+    }
+
+    .icon {
+        all: unset;
+        border-radius: 4px;
+        min-height: 24px;
+        background-color: $background_accent;
+            
+
+        .icon_inner {
+            all: unset;
+            background-color: $theme;
+            min-height: 24px;
+            border-radius: 4px;
+        }
+    }
+}
+
+.clock {
+    all: unset;
+
+    .separator {
+        color: $theme_text;
+        font-weight: 900;
+    }
+}
+
+.network {
+    all: unset;
+    font-weight: bold;
+
+    &:hover {
+        background-color: $background_accent;
+    }
+}
+
+.music_status {
+    all: unset;
+    font-weight: bold;
+
+    .separator {
+        font-weight: 900;
+        color: $theme_text;
+    }
+}
+
+.background {
+    background-color: transparent;
+}
+
+.main {
+    padding: 10px 10px 0 10px;
+}
+
+.panel {
+    background-color: $background_base;
+    border-radius: 5px;
+    color: #fff;
+    padding: 5px 10px;
+}
+
+.button_panel {
+    all: unset;
+    font-weight: bold;
+    background-color: $background_base;
+    border-radius: 5px;
+    color: #fff;
+
+    .btn {
+        all: unset;
+        padding: 5px 10px;
+        background-color: transparent;
+
+        &.active {
+            background-color: $theme;
+        }
+
+        &:not(.active):hover {
+            background-color: $background_accent;
+        }
+
+        &:first-child {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        &:last-child {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    }
+}
+
+.metric {
+    all: unset;
+    font-weight: bold;
+    background-color: $background_base;
+    border-radius: 5px;
+    color: #fff;
+
+    .label {
+        padding: 5px 10px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    scale {
+        all: unset;
+        margin-right: 3px;
+
+        trough {
+            all: unset;
+            background-color: $background_accent;
+            border-radius: 2px;
+            min-height: 24px;
+            min-width: 100px;
+
+            slider {
+                all: unset;
+            }
+
+            highlight {
+                all: unset;
+                background-color: $theme;
+                color: #000000;
+                border-radius: 2px;
+            }
+        }
+    }
+}

@@ -1,0 +1,122 @@
+(defwidget battery_meter []
+    (box :class "battery panel" :space-evenly false :spacing 10
+        (image 
+            :path "${"${EWW_BATTERY.BAT0.status}" == "Charging" 
+                ? "images/icons/battery_charging.svg" 
+                : "images/icons/battery.svg"}"
+            :image-height 20 :image-width 20)
+        "${EWW_BATTERY.BAT0.capacity}%"
+    )
+)
+
+(defwidget oldbatteryicon []
+    (box :class "icon" :width 50
+        (box :class "icon_inner" :width (EWW_BATTERY.BAT0.capacity / 2))
+    )
+)
+
+(defvar workspaces "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
+(defpoll current_ws :interval "250ms" `i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name'`)
+
+(defwidget workspace_switcher []
+    (box :class "button_panel" :orientation "h"
+        (for ws in workspaces
+            (button :class "btn ${ws == current_ws ? "active" : ""}" :onclick "i3-msg workspace ${ws}"
+                ws
+            )
+        )
+    )
+)
+
+(defpoll minutes :interval "10s" `date '+%M'`)
+(defpoll hours :interval "10s" `date '+%H'`)
+
+(defwidget clock []
+    (box :class "clock panel"
+        hours
+        (label :text ":" :class "separator")
+        minutes
+    )
+)
+
+(defpoll ssid :initial "Offline" :interval "5s" `scripts/check_net --stat`)
+(defpoll net_icon :initial "images/icons/wifi_off.svg" :interval "5s" `scripts/check_net --icon`)
+
+(defwidget network []
+    (button :class "network panel" :onclick "nmcli networking ${ssid == "Offline" ? "on" : "off"}"
+        (box :class "network_inner" :space-evenly false :spacing 5
+            (image :path net_icon :image-width 20 :image-height 20)
+            ssid
+        )
+    )
+)
+
+(defpoll song :interval "1s" `scripts/music --song`)
+(defpoll artist :interval "1s" `scripts/music --artist`)
+(defpoll shuffle_status :interval "250ms" `scripts/music --get-shuffle`)
+(defpoll play_status :interval "250ms" `scripts/music --status`)
+(defpoll loop_status :interval "250ms" `scripts/music --loop-get`)
+
+(defwidget music []
+    (box :space-evenly false :spacing 10
+        (box :class "button_panel"
+            (button :class "btn ${shuffle_status == "On" ? "active" : ""}" :onclick "scripts/music --shuffle"
+                (image :path "images/icons/shuffle.svg" :image-width 20 :image-height 20)
+            )
+
+            (button :class "btn" :onclick "scripts/music --previous"
+                (image :path "images/icons/previous_song.svg" :image-width 20 :image-height 20)
+            )
+
+            (button :class "btn" :onclick "scripts/music --toggle"
+                (image 
+                    :path "${play_status == "Playing"
+                        ? "images/icons/pause.svg"
+                        : "images/icons/play.svg"}" 
+                    :image-width 20 :image-height 20)
+            )
+
+            (button :class "btn" :onclick "scripts/music --next"
+                (image :path "images/icons/next_song.svg" :image-width 20 :image-height 20)
+            )
+
+            (button 
+		:class "btn ${loop_status == "Track" ? "active" : ""}"
+                :onclick "scripts/music ${loop_status == "Track" ? "--loop-off" : "--loop-on"}"
+                (image :path "images/icons/loop.svg" :image-width 20 :image-height 20)
+            )
+        )
+        (box :class "music_status panel" :space-evenly false :spacing 5
+            (image :path "images/icons/disc.svg" :image-width 20 :image-height 20)
+            song
+            (label :text "-" :class "separator")
+            artist
+        )
+    )
+)
+
+(defwidget metric [value onchange]
+    (box :orientation "h" :class "metric" :space-evenly false
+        (box :class "label" (children))
+        (scale :min 0 :max 101 :active {onchange != ""} :value value :onchange onchange)
+    )
+)
+
+
+
+(defpoll volume :interval "250ms" `scripts/getvol`)
+
+(defwindow bar :monitor 0 :windowtype "dock" :wm-ignore false :stacking "fg"
+    :geometry (geometry :x "0%" :y "0%" :width "100%" :height "30px" :anchor "top center")
+    :reserve (struts :distance "30px" :side "top")
+    (box :class "main" :spacing "10" :space-evenly false
+        (clock)
+        (workspace_switcher)
+        (battery_meter)
+        (network)
+        (metric :value {volume + 0} :onchange "wpctl set-volume @DEFAULT_SINK@ {}%"
+            (image :path "images/icons/volume.svg" :image-width 20 :image-height 20)
+        )
+        (music)
+    )
+)

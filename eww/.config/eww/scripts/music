@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [[ "$1" == "--song" ]]; then
+    playerctl metadata title
+elif [[ "$1" == "--artist" ]]; then
+    playerctl metadata artist
+elif [[ "$1" == "--status" ]]; then
+    playerctl status
+elif [[ "$1" == "--get-shuffle" ]]; then
+    playerctl shuffle
+elif [[ "$1" == "--shuffle" ]]; then
+    playerctl shuffle Toggle
+elif [[ "$1" == "--toggle" ]]; then
+    playerctl play-pause
+elif [[ "$1" == "--next" ]]; then
+    playerctl next
+elif [[ "$1" == "--previous" ]]; then
+    playerctl previous
+elif [[ "$1" == "--loop-get" ]]; then
+    playerctl loop
+elif [[ "$1" == "--loop-off" ]]; then
+    playerctl loop Playlist
+elif [[ "$1" == "--loop-on" ]]; then
+    playerctl loop Track
+fi

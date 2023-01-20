@@ -1,0 +1,5 @@
+#!/bin/bash
+
+machine_num="$(wpctl get-volume @DEFAULT_SINK@ | tr -d -c 0-9)"
+echo $((10#$machine_num))
+
