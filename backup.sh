@@ -21,7 +21,10 @@ cp ~/.config/picom.conf ./picom/.config/picom.conf
 cp ~/.config/i3/config ./i3/.config/i3/config
 
 # backup eww configs
-cp -r ~/.config/eww/* ./eww/.config/eww
+cp -r ~/.config/eww/* ./eww/.config/eww/
 
 # backup kitty config
 cp ~/.config/kitty/kitty.conf ./kitty/.config/kitty/kitty.conf
+
+# backup neovim configs
+cp -r ~/.config/nvim/* ./nvim/.config/nvim/

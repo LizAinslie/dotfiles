@@ -23,3 +23,6 @@ cp -r ./eww/.config/eww/* ~/.config/eww/
 
 # restore kitty config
 cp ./kitty/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
+
+# restore neovim configs
+cp -r ./nvim/.config/nvim/* ~/.config/nvim/

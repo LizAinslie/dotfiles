@@ -102,8 +102,6 @@
     )
 )
 
-
-
 (defpoll volume :interval "250ms" `scripts/getvol`)
 
 (defwindow bar :monitor 0 :windowtype "dock" :wm-ignore false :stacking "fg"
