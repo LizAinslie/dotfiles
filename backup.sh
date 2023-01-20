@@ -22,3 +22,6 @@ cp ~/.config/i3/config ./i3/.config/i3/config
 
 # backup eww configs
 cp -r ~/.config/eww/* ./eww/.config/eww
+
+# backup kitty config
+cp ~/.config/kitty/kitty.conf ./kitty/.config/kitty/kitty.conf

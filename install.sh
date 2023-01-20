@@ -20,3 +20,6 @@ cp ./i3/.config/i3/config ~/.config/i3/config
 
 # restore eww configs
 cp -r ./eww/.config/eww/* ~/.config/eww/
+
+# restore kitty config
+cp ./kitty/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
