@@ -28,14 +28,17 @@
     )
 )
 
-(defpoll minutes :interval "10s" `date '+%M'`)
-(defpoll hours :interval "10s" `date '+%H'`)
+(defpoll seconds :interval "1s" `date '+%S'`)
+(defpoll minutes :interval "1s" `date '+%M'`)
+(defpoll hours :interval "1m" `date '+%H'`)
 
 (defwidget clock []
     (box :class "clock panel"
         hours
         (label :text ":" :class "separator")
         minutes
+        (label :text ":" :class "separator")
+        seconds
     )
 )
 
