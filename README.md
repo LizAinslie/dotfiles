@@ -6,7 +6,6 @@ Collection of my linux system configs.
 
 ## Screnshots
 
-![01](screenshots/01.png)
 ![02](screenshots/02.png)
 ![03](screenshots/03.png)
 ![04](screenshots/04.png)
