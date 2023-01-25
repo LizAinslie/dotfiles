@@ -31,7 +31,8 @@ $muted: #373e47;
 
 .clock {
     all: unset;
-    font-family: "Fira Mono", monospace;
+    min-width: 100px;
+    font-family: monospace;
 
     .separator {
         color: $theme_text;
@@ -51,6 +52,7 @@ $muted: #373e47;
 .music_status {
     all: unset;
     font-weight: bold;
+    font-family: cursive;
 
     .separator {
         font-weight: 900;

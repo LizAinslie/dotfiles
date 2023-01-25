@@ -5,6 +5,8 @@ Collection of my linux system configs.
 
 ## Screnshots
 ![01](screenshots/01.png)
+![02](screenshots/02.png)
+![03](screenshots/03.png)
 
 ## Installation & Software used
 Below is the software I use and how to get it. Run the included [install script

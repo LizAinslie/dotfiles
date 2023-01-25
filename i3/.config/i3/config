@@ -175,10 +175,11 @@ bindsym $mod+Shift+G exec colorgrab
 
 gaps inner 10
 gaps outer 0
-border_radius 3
+# border_radius 3
 
 for_window [class="^.*"] border pixel 0
 
+exec_always --no-startup-id dunst
 exec_always --no-startup-id feh --bg-fill ~/wallpaper.png
 exec_always --no-startup-id eww daemon
 exec_always --no-startup-id eww open bar
