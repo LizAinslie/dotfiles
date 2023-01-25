@@ -26,3 +26,6 @@ cp ./kitty/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
 
 # restore neovim configs
 cp -r ./nvim/.config/nvim/* ~/.config/nvim/
+
+# restore dunst configs
+cp -r ./dunst/.config/dunst/* ~/.config/dunst/

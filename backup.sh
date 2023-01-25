@@ -28,3 +28,6 @@ cp ~/.config/kitty/kitty.conf ./kitty/.config/kitty/kitty.conf
 
 # backup neovim configs
 cp -r ~/.config/nvim/* ./nvim/.config/nvim/
+
+# backup dunst configs
+cp -r ~/.config/dunst/* ./dunst/.config/dunst/
