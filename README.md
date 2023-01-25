@@ -9,6 +9,7 @@ Collection of my linux system configs.
 ![01](screenshots/01.png)
 ![02](screenshots/02.png)
 ![03](screenshots/03.png)
+![04](screenshots/04.png)
 
 ## To be Paired With...
 
@@ -19,7 +20,7 @@ Collection of my linux system configs.
 ## Installation & Software used
 
 Below is the software I use and how to get it. Run the included [install script
-](install.sh) to install all these dependencies as well as copy the required
+](install.sh) to copy the required
 config files to their respective locations.
 
 **Packages:**
@@ -37,6 +38,7 @@ config files to their respective locations.
 | `xclip` | For manipulating the clipboard |
 | `dunst` | Notification daemon |
 | `neovim` | Vim, a text editor |
+| `cava` | Terminal oscilloscope graph. On the AUR |
 
 ## License
 
