@@ -38,6 +38,7 @@ config files to their respective locations.
 | `dunst` | Notification daemon |
 | `neovim` | Vim, a text editor |
 | `cava` | Terminal oscilloscope graph. On the AUR |
+| `eww` | The "bar" |
 
 ## License
 
