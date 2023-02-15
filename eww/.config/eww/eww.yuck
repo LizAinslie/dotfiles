@@ -121,3 +121,10 @@
         (music)
     )
 )
+
+(defwindow about :monitor 0
+    :geometry (geometry :x "0%" :y "30px" :width "600px" :height "400px" :anchor "top right")
+    (box :class "about" :space-evenly false
+        (label :text "About this machine" :class "aboutHeading")
+    )
+)
