@@ -39,7 +39,13 @@ config files to their respective locations.
 | `neovim` | Vim, a text editor |
 | `cava` | Terminal oscilloscope graph. On the AUR |
 | `eww` | The "bar" |
+| `ttf-firacode-nerd` | Patched Fira Code for nvim-tree |
+
+**Recommended Fonts:**
+- Fira Sans
+- Fira Mono
+- Fira Code
 
 ## License
 
-This code is licensed under the [MIT License](LICENSE), Copyright 2022 Elizabeth Hazel Ainslie.
+This code is licensed under the [MIT License](LICENSE), Copyright 2023 Elizabeth Hazel Ainslie.
