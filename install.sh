@@ -17,6 +17,7 @@ cp ./picom/.config/picom.conf ~/.config/picom.conf
 
 # restore i3 config
 cp ./i3/.config/i3/config ~/.config/i3/config
+cp ./i3/.i3/* ~/.i3/
 
 # restore eww configs
 cp -r ./eww/.config/eww/* ~/.config/eww/

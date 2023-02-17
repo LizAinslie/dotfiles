@@ -19,6 +19,7 @@ cp ~/.config/picom.conf ./picom/.config/picom.conf
 
 # backup i3 config
 cp ~/.config/i3/config ./i3/.config/i3/config
+cp ~/.i3/* ./i3/.i3/
 
 # backup eww configs
 cp -r ~/.config/eww/* ./eww/.config/eww/
