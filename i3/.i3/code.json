@@ -1,0 +1,111 @@
+{
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "marks": [],
+    "percent": 0.8,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "auto_off",
+            "geometry": {
+                "height": 713,
+                "width": 1713,
+                "x": 0,
+                "y": 0
+            },
+            "marks": [],
+            "name": "nvim",
+            "percent": 0.7,
+            "swallows": [
+                {
+                    "class": "^kitty$"
+                }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "floating": "auto_off",
+            "layout": "splith",
+            "marks": [],
+            "percent": 0.3,
+            "type": "con",
+            "nodes": [
+                {
+                    "border": "pixel",
+                    "current_border_width": 0,
+                    "floating": "auto_off",
+                    "geometry": {
+                        "height": 1020,
+                        "width": 1900,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "marks": [],
+                    "name": "cava",
+                    "percent": 0.183333333333333,
+                    "swallows": [
+                        {
+                            "class": "^kitty$"
+                        }
+                    ],
+                    "type": "con"
+                },
+                {
+                    "border": "normal",
+                    "floating": "auto_off",
+                    "layout": "splitv",
+                    "marks": [],
+                    "percent": 0.483333333333333,
+                    "type": "con",
+                    "nodes": [
+                        {
+                            "border": "pixel",
+                            "current_border_width": 0,
+                            "floating": "auto_off",
+                            "geometry": {
+                                "height": 245,
+                                "width": 753,
+                                "x": 0,
+                                "y": 0
+                            },
+                            "marks": [],
+                            "name": "terminal",
+                            "percent": 1,
+                            "swallows": [
+                                {
+                                    "class": "^kitty$"
+                                }
+                            ],
+                            "type": "con"
+                        }
+                    ]
+                },
+                {
+                    "border": "pixel",
+                    "current_border_width": 0,
+                    "floating": "auto_off",
+                    "geometry": {
+                        "height": 245,
+                        "width": 753,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "marks": [],
+                    "name": "runterm",
+                    "percent": 0.333333333333333,
+                    "swallows": [
+                        {
+                            "class": "^kitty$"
+                        }
+                    ],
+                    "type": "con"
+                }
+            ]
+        }
+    ]
+}
+

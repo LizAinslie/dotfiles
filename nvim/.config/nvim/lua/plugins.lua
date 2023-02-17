@@ -33,6 +33,15 @@ require('packer').startup(function(use)
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   }
 
+  -- PETS!!
+  use({
+    "giusgad/pets.nvim",
+    requires = {
+      "edluffy/hologram.nvim",
+      "MunifTanjim/nui.nvim",
+    }
+  })
+
   -- =======
   --   LSP
   -- =======
@@ -111,6 +120,12 @@ vim.o.foldcolumn = '1' -- '0' is not bad
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
+
+-- 2 space tabs
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.bo.softtabstop = 2
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
@@ -324,3 +339,15 @@ require("presence").setup({
     workspace_text = "Working on %s", -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
     line_number_text = "Line %s out of %s", -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
 })
+
+vim.api.nvim_set_hl(0, "pets_popup", { bg = "#22272e" })
+require("pets").setup({
+  speed_multiplier = 1, -- you can make your pet move faster/slower. If slower the animation will have lower fps.
+  random = true,
+  death_animation = false,
+  popup = {
+    hl = { Normal = "pets_popup" },
+    avoid_statusline = true,
+  }
+})
+
