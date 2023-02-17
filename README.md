@@ -9,12 +9,14 @@ Collection of my linux system configs.
 ![02](screenshots/02.png)
 ![03](screenshots/03.png)
 ![04](screenshots/04.png)
+![05](screenshots/05.png)
 
 ## To be Paired With...
 
 - [My Startpage](https://github.com/LizAinslie/startpage)
 - [My Firefox Theme](https://github.com/LizAinslie/rice-firefox-theme)
 - [My Discord Theme](https://github.com/LizAinslie/rice-discord-theme)
+- [My Website Styles](https://github.com/LizAinslie/rice-browser-userstyles)
 
 ## Installation & Software used
 
