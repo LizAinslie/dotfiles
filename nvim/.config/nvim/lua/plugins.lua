@@ -1,9 +1,12 @@
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local install_path = 
+  vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   is_bootstrap = true
-  vim.fn.system { 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path }
+  vim.fn.system {
+    'git', 'clone', '--depth', '1',
+    'https://github.com/wbthomason/packer.nvim', install_path }
   vim.cmd [[packadd packer.nvim]]
 end
 
@@ -11,13 +14,20 @@ require('packer').startup(function(use)
   -- Let Packer manage itself
   use 'wbthomason/packer.nvim'
 
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'} -- Code Folding
-  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
+  -- Code folding
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+
+  -- Add indentation guides even on blank lines
+  use 'lukas-reineke/indent-blankline.nvim'
+
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'andweeb/presence.nvim' -- Discord RPC
+
+  -- Colorcolumn appears when text is over a certain line
+  use 'm4xshen/smartcolumn.nvim'
 
   use {
     'nvim-tree/nvim-tree.lua',
@@ -30,7 +40,11 @@ require('packer').startup(function(use)
   -- Autocompletion
   use {
     'hrsh7th/nvim-cmp',
-    requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+    requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip'
+    },
   }
 
   -- PETS!!
@@ -68,10 +82,21 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
 
   -- Fuzzy Finder (files, lsp, etc)
-  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
+  use {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    }
+  }
 
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only
+  -- load if `make` is available
+  use {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'make',
+    cond = vim.fn.executable 'make' == 1
+  }
 
   -- ====================
   --   Language Support
@@ -116,8 +141,8 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Fold options
-vim.o.foldcolumn = '1' -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldcolumn = '1'
+vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
@@ -131,7 +156,7 @@ vim.bo.softtabstop = 2
 -- See `:help lualine.txt`
 require('lualine').setup {
   options = {
-    icons_enabled = false,
+    icons_enabled = true,
     -- theme = 'onedark',
     component_separators = '|',
     section_separators = '',
@@ -180,12 +205,13 @@ require('ufo').setup({
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
+  -- NOTE: Remember that lua is a real programming language, and as such it is 
+  -- possible to define small helper and utility functions so you don't have to
+  -- repeat yourself many times.
   --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
+  -- In this case, we create a function that lets us more easily define
+  -- mappings specific for LSP related items. It sets the mode, buffer and
+  -- description for us each time.
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -198,11 +224,23 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap(
+    'gr',
+    require('telescope.builtin').lsp_references,
+    '[G]oto [R]eferences'
+  )
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap(
+    '<leader>ds',
+    require('telescope.builtin').lsp_document_symbols,
+    '[D]ocument [S]ymbols'
+  )
+  nmap(
+    '<leader>ws',
+    require('telescope.builtin').lsp_dynamic_workspace_symbols,
+    '[W]orkspace [S]ymbols'
+  )
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -210,8 +248,16 @@ local on_attach = function(_, bufnr)
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  nmap(
+    '<leader>wa',
+    vim.lsp.buf.add_workspace_folder,
+    '[W]orkspace [A]dd Folder'
+  )
+  nmap(
+    '<leader>wr',
+    vim.lsp.buf.remove_workspace_folder,
+    '[W]orkspace [R]emove Folder'
+  )
   nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
@@ -223,10 +269,12 @@ local on_attach = function(_, bufnr)
 end
 
 -- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+-- Feel free to add/remove any LSPs that you want here. They will automatically
+-- be installed.
 --
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
+-- Add any additional override configuration in the following tables. They will
+-- be passed to the `settings` field of the server config. You must look up
+-- that documentation yourself.
 local servers = {
   clangd = {},
   gopls = {},
@@ -244,8 +292,9 @@ local servers = {
 
 -- Setup neovim lua configuration
 require('neodev').setup()
---
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+
+-- nvim-cmp supports additional completion capabilities, so broadcast that to
+-- servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
@@ -321,28 +370,28 @@ require("presence").setup({
   auto_update = true,
     neovim_image_text = "Nya~",
     main_image = "neovim", -- Main image display (either "neovim" or "file")
-    client_id = "793271441293967371", -- Use your own Discord application client id (not recommended)
-    log_level = nil, -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
-    debounce_timeout = 10, -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
-    enable_line_number = true, -- Displays the current line number instead of the current project
-    blacklist = {}, -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
-    buttons = true, -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
-    file_assets = {}, -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
-    show_time = true, -- Show the timer
+    client_id = "793271441293967371",
+    log_level = nil,
+    debounce_timeout = 10,
+    enable_line_number = true,
+    blacklist = {},
+    buttons = true,
+    file_assets = {},
+    show_time = true,
 
     -- Rich Presence text options
-    editing_text = "Editing %s", -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
-    file_explorer_text = "Browsing %s", -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
-    git_commit_text = "Committing changes", -- Format string rendered when committing changes in git (either string or function(filename: string): string)
-    plugin_manager_text = "Managing plugins", -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
-    reading_text = "Reading %s", -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
-    workspace_text = "Working on %s", -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
-    line_number_text = "Line %s out of %s", -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+    editing_text = "Editing %s",
+    file_explorer_text = "Browsing %s",
+    git_commit_text = "Committing changes",
+    plugin_manager_text = "Managing plugins",
+    reading_text = "Reading %s",
+    workspace_text = "Working on %s",
+    line_number_text = "Line %s out of %s",
 })
 
 vim.api.nvim_set_hl(0, "pets_popup", { bg = "#22272e" })
 require("pets").setup({
-  speed_multiplier = 1, -- you can make your pet move faster/slower. If slower the animation will have lower fps.
+  speed_multiplier = 1,
   random = true,
   death_animation = false,
   popup = {
@@ -350,4 +399,6 @@ require("pets").setup({
     avoid_statusline = true,
   }
 })
+
+require("smartcolumn").setup()
 
