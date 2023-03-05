@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+actions() {
+  LOCK_FILE="$HOME/.cache/eww-actions.lock"
+
+  run() {
+    eww open actions
+  }
+
+  if [[ ! -f "$LOCK_FILE" ]]; then
+    touch "$LOCK_FILE"
+    eww update actions_open=true
+    run && echo "opened actions"
+  else
+    eww close actions
+    eww update actions_open=false
+    rm "$LOCK_FILE" && echo "closed actions"
+  fi
+}
+
+music() {
+  LOCK_FILE="$HOME/.cache/eww-music.lock"
+
+  run() {
+    eww update music_controls_reveal=true
+  }
+
+  if [[ ! -f "$LOCK_FILE" ]]; then
+    touch "$LOCK_FILE"
+    run && echo "opened music"
+  else
+    eww update music_controls_reveal=false
+    rm "$LOCK_FILE" && echo "closed music"
+  fi
+}
+
+
+if [ "$1" = "actions" ]; then
+  actions
+elif [ "$1" = "music" ]; then
+  music
+#elif [ "$1" = "audio" ]; then
+#audio
+fi
+
+

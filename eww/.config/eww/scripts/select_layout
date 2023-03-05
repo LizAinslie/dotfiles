@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ "$1" == "code" ]]; then
+    i3-msg "append_layout /home/lizzy/.i3/code.json"
+    kitty ~/code -e /usr/bin/fish &
+    kitty -e /usr/bin/fish -c 'cava' &
+    kitty ~/code -e /usr/bin/fish &
+    kitty ~/code -e /usr/bin/fish & 
+# elif [[ "$1" == "" ]]; then
+#    
+fi

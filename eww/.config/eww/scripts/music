@@ -1,25 +1,25 @@
 #!/bin/bash
 
 if [[ "$1" == "--song" ]]; then
-    playerctl metadata title
+    playerctl --player=spotify metadata title | cut -c -80
 elif [[ "$1" == "--artist" ]]; then
-    playerctl metadata artist
+    playerctl --player=spotify metadata artist | cut -c -80
 elif [[ "$1" == "--status" ]]; then
-    playerctl status
+    playerctl --player=spotify status
 elif [[ "$1" == "--get-shuffle" ]]; then
-    playerctl shuffle
+    playerctl --player=spotify shuffle
 elif [[ "$1" == "--shuffle" ]]; then
-    playerctl shuffle Toggle
+    playerctl --player=spotify shuffle Toggle
 elif [[ "$1" == "--toggle" ]]; then
-    playerctl play-pause
+    playerctl --player=spotify play-pause
 elif [[ "$1" == "--next" ]]; then
-    playerctl next
+    playerctl --player=spotify next
 elif [[ "$1" == "--previous" ]]; then
-    playerctl previous
+    playerctl --player=spotify previous
 elif [[ "$1" == "--loop-get" ]]; then
-    playerctl loop
+    playerctl --player=spotify loop
 elif [[ "$1" == "--loop-off" ]]; then
-    playerctl loop Playlist
+    playerctl --player=spotify loop Playlist
 elif [[ "$1" == "--loop-on" ]]; then
-    playerctl loop Track
+    playerctl --player=spotify loop Track
 fi

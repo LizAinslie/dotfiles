@@ -7,25 +7,12 @@ $theme_text: saturate(lighten($theme, 10%), 40%);
 $muted: #373e47;
 
 .battery {
-    font-weight: bold;
-
     &.charging {
 	color: $theme_text;
     }
 
-    .icon {
-        all: unset;
-        border-radius: 4px;
-        min-height: 24px;
-        background-color: $background_accent;
-            
-
-        .icon_inner {
-            all: unset;
-            background-color: $theme;
-            min-height: 24px;
-            border-radius: 4px;
-        }
+    .label {
+        padding-left: 10px;
     }
 }
 
@@ -34,6 +21,10 @@ $muted: #373e47;
     min-width: 100px;
     font-family: monospace;
 
+    image {
+        margin-right: 5px;
+    }
+
     .separator {
         color: $theme_text;
         font-weight: 900;
@@ -41,11 +32,10 @@ $muted: #373e47;
 }
 
 .network {
-    all: unset;
     font-weight: bold;
 
-    &:hover {
-        background-color: $background_accent;
+    .label {
+        padding-left: 10px;
     }
 }
 
@@ -58,6 +48,10 @@ $muted: #373e47;
         font-weight: 900;
         color: $theme_text;
     }
+    
+    &:hover {
+        background-color: $background_accent;
+    }
 }
 
 .background {
@@ -69,6 +63,7 @@ $muted: #373e47;
 }
 
 .panel {
+    all: unset;
     background-color: $background_base;
     border-radius: 5px;
     color: #fff;
@@ -80,30 +75,30 @@ $muted: #373e47;
     font-weight: bold;
     background-color: $background_base;
     border-radius: 5px;
-    color: #fff;
+    color: #fff; 
+}
 
-    .btn {
-        all: unset;
-        padding: 5px 10px;
-        background-color: transparent;
+.btn {
+    all: unset;
+    padding: 5px 10px;
+    background-color: transparent;
 
-        &.active {
-            background-color: $theme;
-        }
+    &.active {
+        background-color: $theme;
+    }
 
-        &:not(.active):hover {
-            background-color: $background_accent;
-        }
+    &:not(.active):hover {
+        background-color: $background_accent;
+    }
 
-        &:first-child {
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-        }
+    &:first-child {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
 
-        &:last-child {
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
+    &:last-child {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
     }
 }
 
@@ -120,9 +115,26 @@ $muted: #373e47;
         border-bottom-left-radius: 5px;
     }
 
+    .value {
+        margin-right: -50px; 
+    }
+
+
+    &.left {
+        scale {
+            margin-right: 0;
+            margin-left: 3px;
+        }
+
+        .value {
+            margin-right: 0;
+            margin-left: -100px;
+        }
+    }
+
     scale {
         all: unset;
-        margin-right: 3px;
+        margin-right: 3px; 
 
         trough {
             all: unset;
@@ -147,4 +159,36 @@ $muted: #373e47;
 
 * {
     font-family: "Fira Sans", sans-serif;
+}
+
+.actions {
+    background-color: $background_accent;
+    border: 3px solid $background_base;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px;
+
+    .heading {
+        font-size: 17px;
+        font-weight: normal;
+        padding-left: 5px;
+        padding-right: 5px;
+        
+        &:not(:first-child) {
+            margin-top: 10px;
+        }
+    }
+
+    .action {
+        all: unset;
+        padding: 5px 10px;
+        background-color: $background_base;
+        border-radius: 5px;
+        border: 2px solid transparent;
+
+        &:hover {
+            background-color: transparent;
+            border: 2px solid $background_base;
+        }
+    }
 }

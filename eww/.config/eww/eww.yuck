@@ -1,11 +1,40 @@
+;;;;;;
+; Battery Meter
+;;;;;;
+
+(defvar battery_reveal false)
 (defwidget battery_meter []
-    (box :class "battery panel" :space-evenly false :spacing 10
-        (image 
-            :path "${"${EWW_BATTERY.BAT0.status}" == "Charging" 
-                ? "images/icons/battery_charging.svg" 
-                : "images/icons/battery.svg"}"
-            :image-height 20 :image-width 20)
-        "${EWW_BATTERY.BAT0.capacity}%"
+    (eventbox
+        :onhover "eww update battery_reveal=true"
+        :onhoverlost "eww update battery_reveal=false"
+        (box
+            :class "metric left"
+            :space-evenly false
+            (revealer
+                :transition "slideleft"
+                :reveal {battery_reveal}
+                :duration "350ms"
+                (box :space-evenly false
+                    (scale
+                        :min 0
+                        :max 100
+                        :active false
+                        :flipped true
+                        :value {EWW_BATTERY.BAT0.capacity}
+                    )
+                    (label :class "value" :text "${EWW_BATTERY.BAT0.capacity}%")
+                )
+            )
+            (box 
+                :class "label"
+                (image 
+                    :path "${"${EWW_BATTERY.BAT0.status}" == "Charging" 
+                        ? "images/icons/battery_charging.svg" 
+                        : "images/icons/battery.svg"}"
+                    :image-height 20 :image-width 20
+                )
+            )
+        )
     )
 )
 
@@ -15,25 +44,40 @@
     )
 )
 
-(defvar workspaces "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
-(defpoll current_ws :interval "250ms" `i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name'`)
+;;;;;;
+; Workspace Switcher
+;;;;;;
 
+(defvar workspaces "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
+(defpoll current_ws
+    :interval "250ms"
+    `i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name'`)
 (defwidget workspace_switcher []
     (box :class "button_panel" :orientation "h"
         (for ws in workspaces
-            (button :class "btn ${ws == current_ws ? "active" : ""}" :onclick "i3-msg workspace ${ws}"
+            (button 
+                :class "btn ${ws == current_ws ? "active" : ""}"
+                :onclick "i3-msg workspace ${ws}"
                 ws
             )
         )
     )
 )
 
+;;;;;;
+; Clock
+;;;;;;
+
 (defpoll seconds :interval "1s" `date '+%S'`)
 (defpoll minutes :interval "1s" `date '+%M'`)
 (defpoll hours :interval "1m" `date '+%H'`)
 
 (defwidget clock []
-    (box :class "clock panel"
+    (box :class "panel clock"
+        (image
+            :path "images/icons/clock.svg"
+            :image-width 20 :image-height 20
+        )
         hours
         (label :text ":" :class "separator")
         minutes
@@ -42,89 +86,307 @@
     )
 )
 
-(defpoll ssid :initial "Offline" :interval "5s" `scripts/check_net --stat`)
-(defpoll net_icon :initial "images/icons/wifi_off.svg" :interval "5s" `scripts/check_net --icon`)
+;;;;;;
+; Network Metric
+;;;;;;
 
+(defpoll ssid 
+    :initial "Offline"
+    :interval "5s" `scripts/check_net --stat`)
+(defpoll net_icon
+    :initial "images/icons/wifi_off.svg" 
+    :interval "5s" `scripts/check_net --icon`)
+(defvar net_reveal false)
 (defwidget network []
-    (button :class "network panel" :onclick "nmcli networking ${ssid == "Offline" ? "on" : "off"}"
-        (box :class "network_inner" :space-evenly false :spacing 5
+    (eventbox
+        :onhover "eww update net_reveal=true"
+        :onhoverlost "eww update net_reveal=false"
+        (box :class "panel network" :space-evenly false
             (image :path net_icon :image-width 20 :image-height 20)
-            ssid
+            (revealer
+                :transition "slideright"
+                :reveal {net_reveal}
+                :duration "350ms"
+                (label :text {ssid} :class "label")
+            )
         )
     )
 )
+
+;;;;;;
+; Music
+;;;;;;
 
 (defpoll song :interval "1s" `scripts/music --song`)
 (defpoll artist :interval "1s" `scripts/music --artist`)
 (defpoll shuffle_status :interval "250ms" `scripts/music --get-shuffle`)
 (defpoll play_status :interval "250ms" `scripts/music --status`)
 (defpoll loop_status :interval "250ms" `scripts/music --loop-get`)
-
 (defwidget music []
-    (box :space-evenly false :spacing 10
-        (box :class "button_panel"
-            (button :class "btn ${shuffle_status == "On" ? "active" : ""}" :onclick "scripts/music --shuffle"
-                (image :path "images/icons/shuffle.svg" :image-width 20 :image-height 20)
+    (button :class "music_status panel" :onclick "scripts/popout music"
+        (box :space-evenly false :spacing 5
+            (image
+                :path "images/icons/disc.svg"
+                :image-width 20 :image-height 20
             )
-
-            (button :class "btn" :onclick "scripts/music --previous"
-                (image :path "images/icons/previous_song.svg" :image-width 20 :image-height 20)
-            )
-
-            (button :class "btn" :onclick "scripts/music --toggle"
-                (image 
-                    :path "${play_status == "Playing"
-                        ? "images/icons/pause.svg"
-                        : "images/icons/play.svg"}" 
-                    :image-width 20 :image-height 20)
-            )
-
-            (button :class "btn" :onclick "scripts/music --next"
-                (image :path "images/icons/next_song.svg" :image-width 20 :image-height 20)
-            )
-
-            (button 
-		:class "btn ${loop_status == "Track" ? "active" : ""}"
-                :onclick "scripts/music ${loop_status == "Track" ? "--loop-off" : "--loop-on"}"
-                (image :path "images/icons/loop.svg" :image-width 20 :image-height 20)
-            )
-        )
-        (box :class "music_status panel" :space-evenly false :spacing 5
-            (image :path "images/icons/disc.svg" :image-width 20 :image-height 20)
             song
             (label :text "-" :class "separator")
             artist
         )
     )
 )
+(defwidget music_controls []
+    (box :class "button_panel"
+        (button
+            :class "btn ${shuffle_status == "On" ? "active" : ""}"
+            :onclick "scripts/music --shuffle"
+            (image
+                :path "images/icons/shuffle.svg"
+                :image-width 20 :image-height 20
+            )
+        )
 
-(defwidget metric [value onchange]
-    (box :orientation "h" :class "metric" :space-evenly false
-        (box :class "label" (children))
-        (scale :min 0 :max 101 :active {onchange != ""} :value value :onchange onchange)
+        (button :class "btn" :onclick "scripts/music --previous"
+            (image
+                :path "images/icons/previous_song.svg"
+                :image-width 20 :image-height 20
+            )
+        )
+
+        (button :class "btn" :onclick "scripts/music --toggle"
+            (image 
+                :path "${play_status == "Playing"
+                    ? "images/icons/pause.svg"
+                    : "images/icons/play.svg"}" 
+                :image-width 20 :image-height 20
+            )
+        )
+
+        (button :class "btn" :onclick "scripts/music --next"
+            (image
+                :path "images/icons/next_song.svg"
+                :image-width 20 :image-height 20
+            )
+        )
+
+        (button 
+            :class "btn ${loop_status == "Track" ? "active" : ""}"
+            :onclick {loop_status == "Track" 
+                ? "scripts/music --loop-off" 
+                : "scripts/music --loop-on"}
+            (image 
+                :path "images/icons/loop.svg"
+                :image-width 20 :image-height 20
+            )
+        )
     )
 )
 
-(defpoll volume :interval "250ms" `scripts/getvol`)
+;;;;;;
+; Static Metric (Deprecated)
+;;;;;;
 
-(defwindow bar :monitor 0 :windowtype "dock" :wm-ignore false :stacking "fg"
-    :geometry (geometry :x "0%" :y "0%" :width "100%" :height "30px" :anchor "top center")
-    :reserve (struts :distance "30px" :side "top")
-    (box :class "main" :spacing "10" :space-evenly false
-        (clock)
-        (workspace_switcher)
-        (battery_meter)
-        (network)
-        (metric :value {volume + 0} :onchange "wpctl set-volume @DEFAULT_SINK@ {}%"
-            (image :path "images/icons/volume.svg" :image-width 20 :image-height 20)
+(defwidget static_metric [value onchange]
+    (box :orientation "h" :class "metric" :space-evenly false
+        (box :class "label" (children))
+        (scale
+            :min 0
+            :max 101 
+            :active {onchange != ""} 
+            :value value 
+            :onchange onchange
         )
-        (music)
+    )
+)
+
+;;;;;;
+; Volume Control
+;;;;;;
+
+; A dynamic volume control that opens & closes with hover
+(defvar volume_reveal false)
+(defpoll volume :interval "50ms" `scripts/getvol`)
+(defwidget volume []
+    (eventbox
+        :onhover "eww update volume_reveal=true" 
+        :onhoverlost "eww update volume_reveal=false"        
+        (box
+            :orientation "h"
+            :class "metric left"
+            :space-evenly false
+            (revealer 
+                :transition "slideleft" 
+                :reveal {volume_reveal}
+                :duration "350ms"
+                (box :space-evenly false
+                    (scale
+                        :min 0
+                        :max 101
+                        :active true
+                        :flipped true
+                        :value {volume + 0}
+                        :onchange "wpctl set-volume @DEFAULT_SINK@ {}%"
+                    )
+                    (label :class "value" :text "${volume + 0}%")
+                )
+            )
+            (box 
+                :class "label"
+
+                (image 
+                    :path {volume == 0 
+                        ? "images/icons/volume-x.svg" 
+                        : "images/icons/volume.svg"}
+                    :image-width 20
+                    :image-height 20
+                )
+            ) 
+        )
+    )
+)
+
+(defvar music_controls_reveal false)
+(defvar actions_open false)
+(defvar settings_open false)
+(defwindow bar :monitor 0 :windowtype "dock" :wm-ignore false :stacking "fg"
+    :geometry (geometry 
+        :x "0%" 
+        :y "0%"
+        :width "100%"
+        :height "30px"
+        :anchor "top center"
+    )
+    :reserve (struts
+        :distance "30px"
+        :side "top"
+    )
+    (centerbox :orientation "h"
+        (box 
+            :class "main"
+            :spacing "10"
+            :space-evenly false
+            :halign "start"
+            (box
+                :class "button_panel"
+                (button 
+                    :class "btn ${actions_open ? "active" : ""}"
+                    :onclick "scripts/popout actions"
+                    (image 
+                        :path "images/icons/command.svg"
+                        :image-width 20 :image-height 20
+                    )
+                )
+            )
+            (workspace_switcher)
+        )
+        (box :class "main" :spacing "10" :space-evenly false :hexpand true 
+            (music)
+            (revealer
+                :transition "slideright"
+                :reveal {music_controls_reveal}
+                :duration "350ms"
+                (music_controls)
+            )
+        )
+        (box :class "main" :spacing "10" :space-evenly false :halign "end"
+            (volume)
+            (network)
+            (battery_meter) 
+            (clock)
+            (box
+                :class "button_panel"
+                (button :class "btn"
+                    (image 
+                        :path "images/icons/settings.svg"
+                        :image-width 20 :image-height 20
+                    )
+                )
+            )
+        )
     )
 )
 
 (defwindow about :monitor 0
-    :geometry (geometry :x "0%" :y "30px" :width "600px" :height "400px" :anchor "top right")
+    :geometry (geometry
+        :x "0%"
+        :y "30px"
+        :width "600px"
+        :height "400px"
+        :anchor "center"
+    )
     (box :class "about" :space-evenly false
         (label :text "About this machine" :class "aboutHeading")
     )
 )
+
+(defwindow actions :monitor 0 :wm-ignore true :stacking "fg"
+    :geometry (geometry 
+        :x "10px"
+        :y "50px" 
+        :width "150px" 
+        :height "300px" 
+        :anchor "top left"
+    )
+
+    (box :class "actions" :orientation "v" :space-evenly false :spacing 5
+        (label :text "Actions" :halign "start" :class "heading")
+        (button :class "action" :hexpand true :onclick "google-chrome-stable &"
+            (box :space-evenly false :spacing 5
+                (image 
+                    :path "images/icons/chrome.svg"
+                    :image-width 20 :image-height 20
+                )
+                "Open Chrome"
+            )
+        )
+
+        (button :class "action" :hexpand true :onclick "kitty &"
+            (box :space-evenly false :spacing 5
+                (image 
+                    :path "images/icons/terminal.svg"
+                    :image-width 20 :image-height 20
+                )
+                "New Terminal"
+            )
+        )
+
+        (button :class "action" :hexpand true :onclick "scripts/screenshot &"
+            (box :space-evenly false :spacing 5
+                (image 
+                    :path "images/icons/camera.svg"
+                    :image-width 20 :image-height 20
+                )
+                "Take Screenshot"
+            )
+        )
+
+        (button :class "action" :hexpand true :onclick "peek &"
+            (box :space-evenly false :spacing 5
+                (image 
+                    :path "images/icons/video.svg"
+                    :image-width 20 :image-height 20
+                )
+                "Record GIF"
+            )
+        )
+
+
+        (label :text "Layouts" :halign "start" :class "heading")
+        
+        (button 
+            :class "action" 
+            :hexpand true 
+            :onclick "scripts/select_layout code"
+            (box :space-evenly false :spacing 5
+                (image 
+                    :path "images/icons/code.svg"
+                    :image-width 20 :image-height 20
+                )
+                "Code"
+            )
+        )
+
+    )
+)
+
+
