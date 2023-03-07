@@ -45,6 +45,45 @@
 )
 
 ;;;;;;
+; CPU Metric
+;;;;;;
+
+(defvar cpu_reveal false)
+(defwidget cpu_meter []
+    (eventbox
+        :onhover "eww update cpu_reveal=true"
+        :onhoverlost "eww update cpu_reveal=false"
+        (box
+            :class "metric left"
+            :space-evenly false
+            (revealer
+                :transition "slideleft"
+                :reveal {cpu_reveal}
+                :duration "350ms"
+                (box :space-evenly false
+                    (scale
+                        :min 0
+                        :max 100
+                        :active false
+                        :flipped true
+                        :value {EWW_CPU.avg}
+                    )
+                    (label :class "value" :text "${round(EWW_CPU.avg, 1)}%")
+                )
+            )
+            (box 
+                :class "label"
+                (image 
+                    :path "images/icons/cpu.svg"
+                    :image-height 20 :image-width 20
+                )
+            )
+        )
+    )
+)
+
+
+;;;;;;
 ; Workspace Switcher
 ;;;;;;
 
@@ -102,13 +141,13 @@
         :onhover "eww update net_reveal=true"
         :onhoverlost "eww update net_reveal=false"
         (box :class "panel network" :space-evenly false
-            (image :path net_icon :image-width 20 :image-height 20)
             (revealer
-                :transition "slideright"
+                :transition "slideleft"
                 :reveal {net_reveal}
                 :duration "350ms"
                 (label :text {ssid} :class "label")
             )
+            (image :path net_icon :image-width 20 :image-height 20)
         )
     )
 )
@@ -291,6 +330,7 @@
         (box :class "main" :spacing "10" :space-evenly false :halign "end"
             (volume)
             (network)
+            (cpu_meter)
             (battery_meter) 
             (clock)
             (box
