@@ -25,6 +25,7 @@ require('packer').startup(function(use)
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'andweeb/presence.nvim' -- Discord RPC
+  use 'romgrk/barbar.nvim'
 
   -- Colorcolumn appears when text is over a certain line
   use 'm4xshen/smartcolumn.nvim'
@@ -103,6 +104,8 @@ require('packer').startup(function(use)
   -- ====================
   use 'dag/vim-fish' -- fish
   use 'elkowar/yuck.vim' -- yuck
+  use 'Civitasv/cmake-tools.nvim' -- goddamn cmake
+  use 'ranjithshegde/ccls.nvim' -- ccls
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -281,6 +284,7 @@ local servers = {
   pyright = {},
   rust_analyzer = {},
   tsserver = {},
+  kotlin_language_server = {},
 
   sumneko_lua = {
     Lua = {
@@ -320,6 +324,8 @@ mason_lspconfig.setup_handlers {
 
 -- Turn on lsp status information
 require('fidget').setup()
+
+require("ccls").setup({lsp = {use_defaults = true}})
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -401,4 +407,41 @@ require("pets").setup({
 })
 
 require("smartcolumn").setup()
+
+require("cmake-tools").setup {
+  cmake_build_directory = "build"
+}
+
+require('barbar').setup {
+  sidebar_filetypes = {
+    NvimTree = true
+  }
+}
+
+-- barbar mappings
+
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+-- Move to previous/next
+map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
+map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+-- Re-order to previous/next
+map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
+map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+-- Goto buffer in position...
+map('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
+map('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', opts)
+map('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', opts)
+map('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', opts)
+map('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', opts)
+map('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', opts)
+map('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
+map('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
+map('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
+map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
+-- Pin/unpin buffer
+map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
+-- Close buffer
+map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 
