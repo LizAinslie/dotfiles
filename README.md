@@ -2,7 +2,7 @@
 
 Collection of my linux system configs.
 
-> **Note** Use at your own risk, I am not responsible if you fuck up.
+> Use at your own risk, I am not responsible if you fuck up.
 
 ## Screnshots
 
